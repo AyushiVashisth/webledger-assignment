@@ -1,19 +1,20 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from "react";
 
 export const AccountContext = createContext(null);
 
-const GoogleAccount = ({children}) => {
+const GoogleAccount = ({ children }) => {
+  const [googleAccount, setGoogleAccount] = useState(null);
 
-    const [ googleAccount, setgoogleAccount ] = useState();
-
-    return (
-        <AccountContext.Provider value={{ 
-            googleAccount, 
-             setgoogleAccount
-        }}>
-            {children}
-        </AccountContext.Provider>
-    )
-}
+  return (
+    <AccountContext.Provider
+      value={{
+        googleAccount,
+        setGoogleAccount
+      }}
+    >
+      {children}
+    </AccountContext.Provider>
+  );
+};
 
 export default GoogleAccount;

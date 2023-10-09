@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { AccountContext } from "../context/GoogleAccount";
 
 const Login = () => {
-  const { setgoogleAccount } = useContext(AccountContext);
+  const { setGoogleAccount } = useContext(AccountContext);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const backgroundImages = [
@@ -30,7 +30,7 @@ const Login = () => {
   const onLoginSuccess = (res) => {
     try {
       const decoded = jwt_decode(res.credential);
-      setgoogleAccount(decoded);
+      setGoogleAccount(decoded); // Set the googleAccount state here
     } catch (error) {
       console.error("Failed to decode JWT:", error);
     }

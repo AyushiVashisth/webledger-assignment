@@ -5,7 +5,7 @@ import GoogleAccount from "../context/GoogleAccount";
 import CheckAuth from "../context/checkAuth";
 
 const AllRoutes = () => {
-  const clientId =process.env.REACT_APP_CLIENT_ID;
+  const clientId = process.env.REACT_APP_CLIENT_ID;
 
   return (
     <div>
