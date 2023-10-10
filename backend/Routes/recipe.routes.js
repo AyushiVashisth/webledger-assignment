@@ -8,8 +8,8 @@ recipeRouter.get("/", async (req, res) => {
     if (!userId) {
       return res.status(400).json({ message: "UserId is required." });
     }
-    const products = await RecipeModel.find({ userId: userId });
-    res.status(200).json(products);
+    const recipes = await RecipeModel.find({ userId: userId });
+    res.status(200).json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,6 +26,20 @@ recipeRouter.post("/", async (req, res) => {
     res.status(201).json({ msg: "Recipe added successfully!", newRecipe });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+recipeRouter.delete("/:recipeId", async (req, res) => {
+  try {
+    const recipeId = req.params.recipeId;
+    const deletedrecipe = await RecipeModel.findByIdAndRemove(recipeId);
+    if (!deletedrecipe) {
+      return res.status(404).json({ error: "recipe not found" });
+    }
+    res.status(204).json();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
   }
 });
 
