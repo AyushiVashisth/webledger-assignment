@@ -2,19 +2,33 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import RecipeLoader from "./RecipeLoader";
+import { useNavigate } from "react-router-dom";
+import ViewRecipe from "../pages/ViewRecipe";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function stripHTML(htmlString) {
   let doc = new DOMParser().parseFromString(htmlString, "text/html");
   return doc.body.textContent || "";
 }
 
-const ProductCard = () => {
+const ProductCard = ({ userId, setRecipeCount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedDiet, setSelectedDiet] = useState("");
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const navigate = useNavigate();
+
+  const handleViewRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+    console.log("recipe", recipe);
+    localStorage.setItem("recipe", JSON.stringify(recipe));
+    navigate("/viewrecipe");
+  };
 
   const Base_url =
-    "https://api.spoonacular.com/recipes/random?number=15&apiKey=314bdb33d153438382752a4c252635e6";
+    "https://api.spoonacular.com/recipes/random?number=15&apiKey=5c518d49481941d4a8f204a0680f05f9";
 
   const fetchRecipe = (keyword = "", diet = "") => {
     setIsLoading(true);
@@ -50,6 +64,62 @@ const ProductCard = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     fetchRecipe(searchKeyword, selectedDiet);
+  };
+
+  const updateRecipeCount = () => {
+    axios
+      .get(`https://recipe-webledger-api.onrender.com/recipe?userId=${userId}`)
+      .then((res) => {
+        setRecipeCount(res.data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const postRecipe = (recipeData) => {
+    const dataToPost = {
+      userId: userId,
+      title: recipeData.title,
+      extendedIngredients: recipeData.extendedIngredients || [],
+      instructions: recipeData.instructions,
+      readyInMinutes: recipeData.readyInMinutes,
+      servings: recipeData.servings,
+      cuisines: recipeData.cuisines || [],
+      diets: recipeData.diets || [],
+      image: recipeData.image,
+      dishTypes: recipeData.dishTypes || [],
+      author: recipeData.sourceName,
+      summary: recipeData.summary,
+      fontColor: recipeData.fontColor || "defaultColor",
+      source: recipeData.sourceName,
+      occasions: recipeData.occasions || []
+    };
+
+    try {
+      axios({
+        method: "post",
+        url: "https://recipe-webledger-api.onrender.com/recipe",
+        data: dataToPost,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then((response) => {
+          console.log("post userId",response.data.newRecipe.userId, response.data);
+          localStorage.setItem("userId", response.data.newRecipe.userId);
+          toast.success(response.data.msg);
+          updateRecipeCount();
+        })
+
+        .catch((error) => {
+          console.log(error.message);
+          toast.error("Error posting data");
+        });
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error posting data");
+    }
   };
 
   return (
@@ -108,7 +178,7 @@ const ProductCard = () => {
                     alt={el.title}
                     className="w-full h-64 object-cover transition-transform transform scale-100 hover:scale-105"
                   />
-                  <div className="absolute top-4 left-2">
+                  <div className="absolute top-4 left-2 text-xs">
                     {el.vegetarian && (
                       <span className="mr-1 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg bg-blue-800 text-white px-2 py-2 rounded-lg">
                         <i className="fas fa-leaf"></i> Vegetarian
@@ -130,14 +200,24 @@ const ProductCard = () => {
                   <h2 className="text-xl  sm:text-lg lg:text-xl font-semibold text-red-700 mb-2 text-center">
                     {el.title}
                   </h2>
-                  <p className="text-gray-700 mb-4 line-clamp-4">
+                  <p className="text-gray-700 mb-4 line-clamp-3 text-md">
                     {stripHTML(el.summary)}
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-between">
-                    <button className="text-blue-700 hover:underline text-center sm:text-left hover:font-bold mb-2 sm:mb-0">
+                    <button
+                      // to="/viewrecipe"
+                      className="text-blue-700 hover:underline text-center sm:text-left hover:font-bold mb-2 sm:mb-0 text-sm"
+                      onClick={() => handleViewRecipe(el)}
+                    >
                       View Recipe
                     </button>
-                    <button className="bg-blue-600 text-white px-2  py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transition-colors duration-300 text-sm">
+                    <button
+                      className="bg-blue-600 text-white px-2  py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transition-colors duration-300 text-sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        postRecipe(el);
+                      }}
+                    >
                       Add to Favorites
                     </button>
                   </div>
@@ -146,7 +226,10 @@ const ProductCard = () => {
             ))}
           </div>
         )}
+
+        {selectedRecipe && <ViewRecipe />}
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };
