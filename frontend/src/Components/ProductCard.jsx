@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
+import RecipeLoader from "./RecipeLoader";
 function stripHTML(htmlString) {
   let doc = new DOMParser().parseFromString(htmlString, "text/html");
   return doc.body.textContent || "";
@@ -11,8 +12,9 @@ const ProductCard = () => {
   const [data, setData] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedDiet, setSelectedDiet] = useState("");
+
   const Base_url =
-    "https://api.spoonacular.com/recipes/random?number=15&apiKey=5c518d49481941d4a8f204a0680f05f9";
+    "https://api.spoonacular.com/recipes/random?number=15&apiKey=314bdb33d153438382752a4c252635e6";
 
   const fetchRecipe = (keyword = "", diet = "") => {
     setIsLoading(true);
@@ -28,9 +30,17 @@ const ProductCard = () => {
 
     axios
       .get(url)
-      .then((res) => setData(res.data.recipes))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+      .then((res) => {
+        setData(res.data.recipes);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 5000);
+      });
   };
 
   useEffect(() => {
@@ -47,10 +57,10 @@ const ProductCard = () => {
       <div className="container mx-auto">
         <form
           onSubmit={handleSearch}
-          className="md:w-[50%] w-[50%] m-auto bg-blue-700 p-6 rounded-lg shadow-md text-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg mb-10"
+          className="md:w-[80%] w-full max-w-screen-md m-auto bg-gray-400 p-2 rounded-lg shadow-md text-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg mb-10"
         >
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <div className="flex-grow">
+            <div className="flex-grow w-full sm:w-1/2">
               <input
                 type="text"
                 placeholder="Search for recipes..."
@@ -59,11 +69,11 @@ const ProductCard = () => {
                 className="p-3 border border-white rounded-lg w-full focus:outline-none focus:border-blue-200"
               />
             </div>
-            <div className="flex-grow">
+            <div className="flex-grow w-full sm:w-1/4">
               <select
                 value={selectedDiet}
                 onChange={(e) => setSelectedDiet(e.target.value)}
-                className="p-3 border border-white rounded-lg w-full focus:outline-none focus:border-blue-200"
+                className="p-3 border border-white rounded-lg w-full focus:outline-none focus:border-blue-200 text-black"
               >
                 <option value="">Select Diet</option>
                 <option value="vegetarian">Vegetarian</option>
@@ -71,11 +81,12 @@ const ProductCard = () => {
                 <option value="glutenFree">Gluten-Free</option>
               </select>
             </div>
-            <div>
+            <div className="w-full sm:w-auto flex justify-center">
               <button
                 type="submit"
-                className="bg-white text-blue-900 p-3 rounded-lg hover:bg-blue-500 focus:outline-none focus:bg-blue-100 hover:text-white"
+                className="bg-blue-500 text-blue-900 p-3 rounded-lg hover:bg-blue-500 focus:outline-none focus:bg-blue-100 hover:text-white flex gap-4"
               >
+                Search
                 <FiSearch size={24} />
               </button>
             </div>
@@ -83,7 +94,7 @@ const ProductCard = () => {
         </form>
 
         {isLoading ? (
-          <p className="text-2xl text-gray-600">Loading...</p>
+          <RecipeLoader />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {data.map((el) => (
@@ -97,36 +108,36 @@ const ProductCard = () => {
                     alt={el.title}
                     className="w-full h-64 object-cover transition-transform transform scale-100 hover:scale-105"
                   />
-                  <div className=" bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg absolute top-2 left-2 bg-blue-800 text-white px-2 py-2 rounded-md">
+                  <div className="absolute top-4 left-2">
                     {el.vegetarian && (
-                      <span className="mr-2">
+                      <span className="mr-1 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg bg-blue-800 text-white px-2 py-2 rounded-lg">
                         <i className="fas fa-leaf"></i> Vegetarian
                       </span>
                     )}
                     {el.vegan && (
-                      <span className="mr-2">
+                      <span className="mr-1 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg bg-blue-800 text-white px-2 py-2 rounded-lg">
                         <i className="fas fa-seedling"></i> Vegan
                       </span>
                     )}
                     {el.glutenFree && (
-                      <span>
+                      <span className="bg-blue-800 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg text-white px-2 py-2 rounded-lg mr-1">
                         <i className="fas fa-bread-slice"></i> Gluten-Free
                       </span>
                     )}
                   </div>
                 </div>
                 <div className="p-4">
-                  <h2 className="text-2xl font-semibold text-red-700 mb-2 h-14 text-center">
+                  <h2 className="text-xl  sm:text-lg lg:text-xl font-semibold text-red-700 mb-2 text-center">
                     {el.title}
                   </h2>
                   <p className="text-gray-700 mb-4 line-clamp-4">
                     {stripHTML(el.summary)}
                   </p>
-                  <div className="flex items-center justify-between ">
-                    <button className="text-blue-700 hover:underline text-left hover:font-bold">
+                  <div className="flex flex-col sm:flex-row items-center justify-between">
+                    <button className="text-blue-700 hover:underline text-center sm:text-left hover:font-bold mb-2 sm:mb-0">
                       View Recipe
                     </button>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transition-colors duration-300">
+                    <button className="bg-blue-600 text-white px-2  py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transition-colors duration-300 text-sm">
                       Add to Favorites
                     </button>
                   </div>

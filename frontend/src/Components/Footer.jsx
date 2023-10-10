@@ -4,22 +4,14 @@ import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <div className="bg-orange-300 py-6">
+    <div className="bg-red-400 py-6">
       <div className="container mx-auto">
         <div className="text-center">
           <p className="text-sm text-black">
             &copy; {new Date().getFullYear()} My Web. All rights reserved.
           </p>
           <p className="text-sm text-black mt-2">
-            Made with ❤️ by{" "}
-            <a
-              className="text-black"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ayushi Vashisth
-            </a>
+            Made with ❤️ by Ayushi Vashisth
           </p>
         </div>
         <div className="flex justify-center space-x-4 mt-4">

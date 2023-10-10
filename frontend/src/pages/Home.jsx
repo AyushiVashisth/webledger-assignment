@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AccountContext } from "../context/GoogleAccount";
-import { FiMenu, FiHeart, FiLogOut } from "react-icons/fi"; 
+import { FiMenu, FiHeart, FiLogOut } from "react-icons/fi";
 import Footer from "../Components/Footer";
 import ProductCard from "../Components/ProductCard";
 
@@ -21,9 +21,9 @@ const Home = ({ userId }) => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Navbar */}
-      <nav className="bg-blue-700 let-400-500 shadow-md p-4 border-b-2 border-blue-500">
+      <nav className="bg-red-500 let-400-500 shadow-md p-4 border-b-2 border-red-500">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-semibold text-red-500">
+          <Link to="/" className="text-2xl font-extrabold text-blue-700">
             Recipe Hub
           </Link>
           {/* Hamburger Menu for Mobile */}
@@ -32,7 +32,7 @@ const Home = ({ userId }) => {
               onClick={toggleMenu}
               className="text-gray-600 hover:text-blue-500 transition duration-300 focus:outline-none"
             >
-              <FiMenu size={24} /> 
+              <FiMenu size={24} />
             </button>
           </div>
           {/* Desktop Navigation */}
@@ -59,7 +59,7 @@ const Home = ({ userId }) => {
               className="bg-red-500 text-white hover:bg-red-600 rounded-full py-2 px-4 hover:shadow-md transition duration-300"
               onClick={handleLogout}
             >
-              <FiLogOut size={20} /> {/* Logout icon */}
+              <FiLogOut size={20} />
             </button>
           </div>
         </div>
@@ -72,7 +72,7 @@ const Home = ({ userId }) => {
                   to="/wishlist"
                   className="block hover:text-blue-500 transition duration-300"
                 >
-                  <FiHeart size={20} /> {/* Favorites icon */}
+                  <FiHeart size={20} />
                 </Link>
               </li>
               <li>
@@ -89,20 +89,19 @@ const Home = ({ userId }) => {
               </li>
               <li>
                 <button
-                  className="block bg-red-500 text-white hover:bg-red-600 rounded-full py-1 px-2 hover:shadow-md transition duration-300 w-auto text-center"
+                  className="block bg-red-300 text-white hover:bg-red-600 rounded-full py-1 px-2 hover:shadow-md transition duration-300 w-auto text-center border-4 border-red-800"
                   onClick={handleLogout}
                 >
-                  <FiLogOut size={20} /> {/* Logout icon */}
+                  <FiLogOut size={20} />
                 </button>
               </li>
             </ul>
           </div>
         )}
       </nav>
-      <ProductCard userId={userId}/>
+      <ProductCard userId={userId} />
 
-      {/* Content of your Home page goes here */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
