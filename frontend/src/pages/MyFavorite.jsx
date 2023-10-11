@@ -96,7 +96,7 @@ const MyFavorite = ({ userId }) => {
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-center">
-                      <h2 className="text-2xl font-semibold mb-2">
+                    <h2 className="sm:text-3xl md:text-2xl lg:text-xl line-clamp-2 text-2xl font-semibold mb-2 h-16 text-red-700">
                         {recipe.title}
                       </h2>
                       <button

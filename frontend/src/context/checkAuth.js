@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 const CheckAuth = () => {
   const { googleAccount } = useContext(AccountContext);
   const userId = googleAccount ? googleAccount.sub : null;
+  localStorage.setItem("userId", userId);
 
   return (
     <div>

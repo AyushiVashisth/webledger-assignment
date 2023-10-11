@@ -28,7 +28,7 @@ const ProductCard = ({ userId, setRecipeCount }) => {
   };
 
   const Base_url =
-    "https://api.spoonacular.com/recipes/random?number=15&apiKey=5c518d49481941d4a8f204a0680f05f9";
+    "https://api.spoonacular.com/recipes/random?number=15&apiKey=314bdb33d153438382752a4c252635e6";
 
   const fetchRecipe = (keyword = "", diet = "") => {
     setIsLoading(true);
@@ -123,7 +123,7 @@ const ProductCard = ({ userId, setRecipeCount }) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
+    <div className="bg-white min-h-screen p-4">
       <div className="container mx-auto">
         <form
           onSubmit={handleSearch}
@@ -180,24 +180,24 @@ const ProductCard = ({ userId, setRecipeCount }) => {
                   />
                   <div className="absolute top-4 left-2 text-xs">
                     {el.vegetarian && (
-                      <span className="mr-1 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg bg-blue-800 text-white px-2 py-2 rounded-lg">
+                      <span className="mr-1 bg-blue-800 text-white px-2 py-2 rounded-lg text-xs">
                         <i className="fas fa-leaf"></i> Vegetarian
                       </span>
                     )}
                     {el.vegan && (
-                      <span className="mr-1 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg bg-blue-800 text-white px-2 py-2 rounded-lg">
+                      <span className="mr-1 bg-blue-800 text-white px-2 py-2 rounded-lg text-xs">
                         <i className="fas fa-seedling"></i> Vegan
                       </span>
                     )}
                     {el.glutenFree && (
-                      <span className="bg-blue-800 bg-opacity-80 backdrop-blur-lg font-bold drop-shadow-lg text-white px-2 py-2 rounded-lg mr-1">
+                      <span className="mr-1 bg-blue-800 text-white px-2 py-2 rounded-lg text-xs">
                         <i className="fas fa-bread-slice"></i> Gluten-Free
                       </span>
                     )}
                   </div>
                 </div>
                 <div className="p-4">
-                  <h2 className="text-xl  sm:text-lg lg:text-xl font-semibold text-red-700 mb-2 text-center">
+                  <h2 className="text-xl sm:text-xl lg:text-xl line-clamp-2 font-semibold text-red-700 mb-2 h-14">
                     {el.title}
                   </h2>
                   <p className="text-gray-700 mb-4 line-clamp-3 text-md">

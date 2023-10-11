@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiHeart, FiLogOut } from "react-icons/fi";
 
 const Navbar = ({ recipeCount, setRecipeCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate()
   console.log(recipeCount);
 
   const toggleMenu = () => {
@@ -12,6 +13,7 @@ const Navbar = ({ recipeCount, setRecipeCount }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
+    navigate("/")
   };
 
   return (
