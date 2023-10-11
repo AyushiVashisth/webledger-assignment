@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ViewRecipe from "../pages/ViewRecipe";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaHeart } from "react-icons/fa";
 
 function stripHTML(htmlString) {
   let doc = new DOMParser().parseFromString(htmlString, "text/html");
@@ -18,6 +19,7 @@ const ProductCard = ({ userId, setRecipeCount }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedDiet, setSelectedDiet] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
 
   const handleViewRecipe = (recipe) => {
@@ -78,6 +80,7 @@ const ProductCard = ({ userId, setRecipeCount }) => {
   };
 
   const postRecipe = (recipeData) => {
+    console.log("id", recipeData.id);
     const dataToPost = {
       userId: userId,
       title: recipeData.title,
@@ -106,7 +109,11 @@ const ProductCard = ({ userId, setRecipeCount }) => {
         }
       })
         .then((response) => {
-          console.log("post userId",response.data.newRecipe.userId, response.data);
+          console.log(
+            "post userId",
+            response.data.newRecipe.userId,
+            response.data
+          );
           localStorage.setItem("userId", response.data.newRecipe.userId);
           toast.success(response.data.msg);
           updateRecipeCount();
@@ -119,6 +126,18 @@ const ProductCard = ({ userId, setRecipeCount }) => {
     } catch (error) {
       console.log(error.message);
       toast.error("Error posting data");
+    }
+  };
+
+  const toggleFavorite = (recipe) => {
+    const index = favorites.findIndex((fav) => fav.id === recipe.id);
+    if (index === -1) {
+      setFavorites([...favorites, recipe]);
+      postRecipe(recipe);
+    } else {
+      const updatedFavorites = [...favorites];
+      updatedFavorites.splice(index, 1);
+      setFavorites(updatedFavorites);
     }
   };
 
@@ -196,6 +215,23 @@ const ProductCard = ({ userId, setRecipeCount }) => {
                     )}
                   </div>
                 </div>
+                <div
+                  className="absolute bottom-[50%] right-4 border-white border-2 p-2"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(el);
+                  }}
+                >
+                  <FaHeart
+                    size={26}
+                    color={
+                      favorites.some((fav) => fav.id === el.id)
+                        ? "red"
+                        : "white"
+                    }
+                  />
+                </div>
+
                 <div className="p-4">
                   <h2 className="text-xl sm:text-xl lg:text-xl line-clamp-2 font-semibold text-red-700 mb-2 h-14">
                     {el.title}
@@ -203,22 +239,12 @@ const ProductCard = ({ userId, setRecipeCount }) => {
                   <p className="text-gray-700 mb-4 line-clamp-3 text-md">
                     {stripHTML(el.summary)}
                   </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-between">
+                  <div className=" items-right justify-center text-right">
                     <button
-                      // to="/viewrecipe"
                       className="text-blue-700 hover:underline text-center sm:text-left hover:font-bold mb-2 sm:mb-0 text-sm"
                       onClick={() => handleViewRecipe(el)}
                     >
                       View Recipe
-                    </button>
-                    <button
-                      className="bg-blue-600 text-white px-2  py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transition-colors duration-300 text-sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        postRecipe(el);
-                      }}
-                    >
-                      Add to Favorites
                     </button>
                   </div>
                 </div>
