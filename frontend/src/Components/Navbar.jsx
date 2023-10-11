@@ -4,7 +4,7 @@ import { FiMenu, FiHeart, FiLogOut } from "react-icons/fi";
 
 const Navbar = ({ recipeCount, setRecipeCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   console.log(recipeCount);
 
   const toggleMenu = () => {
@@ -13,12 +13,12 @@ const Navbar = ({ recipeCount, setRecipeCount }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
-    navigate("/")
+    navigate("/");
   };
 
   return (
     <div>
-      <nav className="bg-red-500 let-400-500 shadow-md p-4 border-b-2 border-red-500">
+      <nav className="bg-red-500 let-400-500 shadow-md p-4 border-b-2 border-red-500 fixed z-10 w-full top-0">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-extrabold text-blue-700">
             Recipe Hub
@@ -35,11 +35,11 @@ const Navbar = ({ recipeCount, setRecipeCount }) => {
           <div className="hidden lg:flex items-center space-x-4">
             <div className="flex space-x-6 text-gray-600">
               <Link
-                to="/wishlist"
+                to="/myfavorite"
                 className="hover:text-blue-500 transition duration-300"
               >
                 <span className="relative">
-                  <FiHeart size={30} /> 
+                  <FiHeart size={30} />
                   {recipeCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full p-1 text-xs w-4">
                       {recipeCount}
@@ -62,7 +62,7 @@ const Navbar = ({ recipeCount, setRecipeCount }) => {
             <ul className="text-gray-600 space-y-2">
               <li>
                 <Link
-                  to="/wishlist"
+                  to="/myfavorite"
                   className="block hover:text-blue-500 transition duration-300"
                 >
                   <FiHeart size={20} />

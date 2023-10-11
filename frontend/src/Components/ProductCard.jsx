@@ -142,8 +142,8 @@ const ProductCard = ({ userId, setRecipeCount }) => {
   };
 
   return (
-    <div className="bg-white min-h-screen p-4">
-      <div className="container mx-auto">
+    <div className="bg-white p-4">
+      <div className="container mx-auto mt-20">
         <form
           onSubmit={handleSearch}
           className="md:w-[80%] w-full max-w-screen-md m-auto bg-gray-400 p-2 rounded-lg shadow-md text-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg mb-10"

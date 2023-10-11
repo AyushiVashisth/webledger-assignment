@@ -40,12 +40,12 @@ const Home = ({ userId }) => {
     };
 
     fetchRecipe();
-  }, []);
+  }, [userId]);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white">
       {/* Navbar */}
-      <nav className="bg-red-500 let-400-500 shadow-md p-4 border-b-2 border-red-500">
+      <nav className="fixed z-10 w-full top-0 bg-red-500 let-400-500 shadow-md p-4 border-b-2 border-red-500">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-extrabold text-blue-700">
             Recipe Hub

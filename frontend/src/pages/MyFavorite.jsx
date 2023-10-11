@@ -6,6 +6,7 @@ import RecipeLoader from "../Components/RecipeLoader";
 import { FaTrash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../Components/Footer";
 
 const MyFavorite = ({ userId }) => {
   console.log("1", userId);
@@ -65,7 +66,7 @@ const MyFavorite = ({ userId }) => {
   return (
     <>
       <Navbar recipeCount={recipeCount} setRecipeCount={setRecipeCount} />
-      <div className="bg-white py-8">
+      <div className="bg-white py-8 mt-20">
         <div className="container mx-auto px-4">
           {loading ? (
             <RecipeLoader />
@@ -96,7 +97,7 @@ const MyFavorite = ({ userId }) => {
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-center">
-                    <h2 className="sm:text-3xl md:text-2xl lg:text-xl line-clamp-2 text-2xl font-semibold mb-2 h-16 text-red-700">
+                      <h2 className="sm:text-3xl md:text-2xl lg:text-xl line-clamp-2 text-2xl font-semibold mb-2 h-16 text-red-700">
                         {recipe.title}
                       </h2>
                       <button
@@ -167,6 +168,7 @@ const MyFavorite = ({ userId }) => {
         </div>
         <ToastContainer position="top-right" />
       </div>
+      <Footer />
     </>
   );
 };

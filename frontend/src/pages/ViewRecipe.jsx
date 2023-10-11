@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import Footer from "../Components/Footer";
 
 const ViewRecipe = () => {
   const selectedRecipe = JSON.parse(localStorage.getItem("recipe"));
@@ -32,7 +33,7 @@ const ViewRecipe = () => {
   return (
     <>
       <Navbar recipeCount={recipeCount} setRecipeCount={setRecipeCount} />
-      <div className="bg-gray-100 min-h-screen p-4 md:p-8">
+      <div className="bg-gray-100 min-h-screen p-4 md:p-8 mt-16">
         <div className="container mx-auto">
           {selectedRecipe ? (
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -173,6 +174,7 @@ const ViewRecipe = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
