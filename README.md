@@ -1,14 +1,15 @@
 <h1 align="center">🍜 Full-Stack Recipe Application Development 🍜</h1>
 
-<p align="center" text="justify">
-Create an interactive recipe application as a full-stack developer with skills in Node.js and React.js. The objective is to build a responsive user interface, implement data retrieval from a third-party API (MongoDB), and manage user preferences. Backend development involves creating a Node.js server, implementing RESTful API endpoints for recipe search and user preferences, user registration/authentication, and storing preferences in a database (MongoDB). Frontend development includes designing a user interface for recipe search, displaying results and recipe details, saving favourites, and ensuring cross-browser compatibility. Git is used for version control, and the assignment is evaluated based on requirements, code quality, UI design, server functionality, user authentication, version control, deployment, and user experience. Plagiarism is prohibited, and best practices should be followed.
-</p>
+<h3 align="justify" width="80%">
 
-<br/>
+Create an interactive recipe application as a full-stack developer with skills in Node.js and React.js. The objective is to build a responsive user interface, implement data retrieval from a third-party API (MongoDB), and manage user preferences. Backend development involves creating a Node.js server, implementing RESTful API endpoints for recipe search and user preferences, user registration/authentication, and storing preferences in a database (MongoDB). Frontend development includes designing a user interface for recipe search, displaying results and recipe details, saving favourites, and ensuring cross-browser compatibility. Git is used for version control, and the assignment is evaluated based on requirements, code quality, UI design, server functionality, user authentication, version control, deployment, and user experience. Plagiarism is prohibited, and best practices should be followed.  [Link](https://spoonacular.com/food-api/docs)
+
 
 ### Frontend Deployed URL 👉 [Click here](https://webledger-recipe-assign.vercel.app/)
 
 ### Backend API 👉 [Click here](https://recipe-webledger-api.onrender.com/)
+</h3>
+
 
 <br/>
 
