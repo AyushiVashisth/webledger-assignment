@@ -24,10 +24,15 @@ const Login = () => {
     try {
       const decoded = jwt_decode(res.credential);
       setGoogleAccount(decoded);
+  
+      // Save the user's authentication data and user ID in local storage.
+      localStorage.setItem("userAuthData", JSON.stringify(decoded));
+      localStorage.setItem("userId", decoded.sub);
     } catch (error) {
       console.error("Failed to decode JWT:", error);
     }
   };
+  
 
   const onLoginError = (res) => {
     console.error("Login failed:", res);
